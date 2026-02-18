@@ -1,0 +1,4 @@
+ID                                   Name                     Schedule                         Next       Last       Status    Target    Agent     
+93c4e4e6-42d6-461c-bfe7-411fe93d7598 backup:workspace-daily   cron 0 4 * * * @ Asia/Dubai (... in 5h      -          idle      isolated  telegram
+57010f57-f824-4eed-8a7e-e9c393669e47 healthcheck:security-... cron 0 9 * * 0 @ Asia/Dubai (... in 3d      -          idle      isolated  telegram
+bef59017-a5d5-43d4-98d7-1dac37846636 healthcheck:update-st... cron 0 9 * * 1 @ Asia/Dubai (... in 4d      -          idle      isolated  telegram

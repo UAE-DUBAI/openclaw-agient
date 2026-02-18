@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.2.17",
+    "lastTouchedAt": "2026-02-18T17:01:41.697Z"
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/google/gemini-3-pro-preview"
+      },
+      "models": {
+        "openrouter/anthropic/claude-3.5-sonnet": {},
+        "openrouter/anthropic/claude-sonnet-4.5": {},
+        "openrouter/anthropic/claude-opus-4-6": {},
+        "openrouter/google/gemini-3-pro-preview": {}
+      },
+      "memorySearch": {
+        "enabled": true,
+        "sources": [
+          "memory",
+          "sessions"
+        ],
+        "experimental": {
+          "sessionMemory": false
+        },
+        "provider": "local"
+      },
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4
+    },
+    "list": [
+      {
+        "id": "main",
+        "identity": {
+          "name": "Alpha",
+          "avatar": "avatars/alpha_avatar.png"
+        },
+        "groupChat": {
+          "mentionPatterns": [
+            "#alpha"
+          ]
+        },
+        "subagents": {
+          "allowAgents": [
+            "*"
+          ]
+        }
+      },
+      {
+        "id": "whatsapp",
+        "model": "openrouter/google/gemini-3-pro-preview",
+        "identity": {
+          "name": "Alpha",
+          "avatar": "avatars/alpha_avatar.png"
+        },
+        "groupChat": {
+          "mentionPatterns": [
+            "#alpha",
+            "#Alpha",
+            "@alpha",
+            "@Alpha"
+          ]
+        },
+        "subagents": {
+          "allowAgents": [
+            "*"
+          ]
+        }
+      },
+      {
+        "id": "telegram",
+        "model": "openrouter/google/gemini-3-pro-preview",
+        "identity": {
+          "name": "Alpha",
+          "avatar": "avatars/alpha_avatar.png"
+        },
+        "subagents": {
+          "allowAgents": [
+            "*"
+          ]
+        }
+      },
+      {
+        "id": "security-reviewer",
+        "model": "openrouter/anthropic/claude-opus-4-6",
+        "identity": {
+          "name": "SecurityReviewer"
+        }
+      }
+    ]
+  },
+  "tools": {
+    "media": {
+      "audio": {
+        "enabled": true,
+        "models": [
+          {
+            "provider": "openrouter",
+            "model": "google/gemini-3-flash-preview"
+          },
+          {
+            "type": "cli",
+            "command": "env",
+            "args": [
+              "PATH=/home/openclaw/bin:$PATH",
+              "/home/openclaw/.openclaw/voice_venv/bin/whisper",
+              "{{MediaPath}}",
+              "--model",
+              "base",
+              "--output_format",
+              "txt",
+              "--output_dir",
+              "/tmp"
+            ],
+            "timeoutSeconds": 300
+          }
+        ]
+      }
+    }
+  },
+  "bindings": [
+    {
+      "agentId": "whatsapp",
+      "match": {
+        "channel": "whatsapp"
+      }
+    },
+    {
+      "agentId": "telegram",
+      "match": {
+        "channel": "telegram"
+      }
+    }
+  ],
+  "messages": {
+    "tts": {
+      "auto": "inbound"
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true
+  },
+  "session": {
+    "dmScope": "per-account-channel-peer"
+  },
+  "channels": {
+    "whatsapp": {
+      "dmPolicy": "allowlist",
+      "selfChatMode": true,
+      "allowFrom": [
+        "+971506248808",
+        "+971502959998",
+        "+971552231111",
+        "+971553223666",
+        "+971503000159",
+        "+971555593322",
+        "+971542666642"
+      ],
+      "groupPolicy": "allowlist",
+      "debounceMs": 0,
+      "accounts": {
+        "default": {
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "+971506248808",
+            "+971502959998",
+            "+971552231111",
+            "+971553223666",
+            "+971503000159",
+            "+971555593322",
+            "+971542666642"
+          ],
+          "groupAllowFrom": [
+            "+971506248808",
+            "+971502959998",
+            "+971552231111",
+            "+971553223666",
+            "+971503000159",
+            "+971555593322",
+            "+971542666642"
+          ],
+          "groupPolicy": "allowlist",
+          "groups": {
+            "*": {
+              "requireMention": true
+            }
+          },
+          "debounceMs": 0
+        }
+      },
+      "mediaMaxMb": 50
+    },
+    "telegram": {
+      "name": "main",
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "8324492991:AAHkZa_1KAwj7ZKHLaabo-JnusWk1XBrBZ0",
+      "groupPolicy": "allowlist",
+      "streamMode": "partial"
+    }
+  },
+  "gateway": {
+    "port": 45371,
+    "mode": "local",
+    "bind": "tailnet",
+    "auth": {
+      "mode": "token",
+      "token": "hBG77nyEnP+lPsskxxSxbME1friyunmGlT+CT/HIQjtwbLJVbofPkhjreODK+k1G",
+      "rateLimit": {
+        "maxAttempts": 10,
+        "windowMs": 60000,
+        "lockoutMs": 300000
+      }
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      },
+      "whatsapp": {
+        "enabled": true
+      }
+    }
+  }
+}
