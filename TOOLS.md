@@ -2,39 +2,32 @@
 
 Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
 
-## What Goes Here
+## Environment: Proxmox VM (UAE-DUBAI)
 
-Things like:
+This environment has strict outbound firewall rules blocking standard SSH (port 22).
 
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
+### GitHub Access (SSH over HTTPS)
+- **Problem:** Port 22 is blocked outbound.
+- **Solution:** Use SSH over HTTPS port 443 via `ssh.github.com`.
+- **Config:** `~/.ssh/config` must contain:
+  ```ssh
+  Host github.com
+    Hostname ssh.github.com
+    Port 443
+    User git
+  ```
+- **Verification:** `ssh -T git@github.com` (should connect successfully).
 
-## Examples
-
-```markdown
 ### Cameras
-
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
+- (None configured yet)
 
 ### SSH
-
-- home-server → 192.168.1.100, user: admin
+- (None configured yet)
 
 ### TTS
-
 - Preferred voice: "Nova" (warm, slightly British)
 - Default speaker: Kitchen HomePod
-```
 
 ## Why Separate?
 
 Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
